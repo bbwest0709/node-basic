@@ -9,3 +9,6 @@ console.log(cr.toFixed(2))
 
 let rt = obj.reactangle(5, 8)
 console.log(rt)
+
+let tr = obj.triangle(7, 8)
+console.log(tr)

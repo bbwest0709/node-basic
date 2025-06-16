@@ -18,6 +18,9 @@ const area = {
     },
     reactangle: function (width, height) {
         return width * height
+    },
+    triangle: function (base, height) {
+        return (base * height) / 2
     }
 }
 
