@@ -1,5 +1,5 @@
 // ex05_requre.js
-const obj = require("./ex05_modul") // 확장자는 생략 가능
+const obj = require("./ex05_module") // 확장자는 생략 가능
 const obj2 = require('./sample');
 /**
  * require('모듈파일명')
