@@ -11,6 +11,8 @@ const app = express();
 
 app.set('port', 9090)
 
+// public 폴더 내에 정적인 파일들(이미지, html, css, js)을 넣으면 브라우저에서 접근 가능하도록 설정
+// http://localhost:9090/images/clear.png -> public 포함되지 않음
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
@@ -18,12 +20,28 @@ app.get('/', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
-    res.send('<h1>모든 회원 목록</h1>')
+    let str = `<h1> 모든 회원 목록 </h1>
+    <ul>
+        <li><a href='/users/1'>1번 : 홍길동</a></li>
+        <li><a href='/users/2'>2번 : 최영아</a></li>
+        <li><a href='/users/3'>3번 : 김철수</a></li>
+    </ul>
+    `
+    res.send(str)
+})
+
+// path 부분에 ':파라미터명' ==> 동적 세그먼트
+// req.params.파라미터명
+app.get('/users/:uid', (req, res) => {
+    const uid = req.params.uid;
+    let str = `<h1>${uid}번 회원님의 정보</h1>
+    <p>DB에서 ${uid}번 회원님의 정보를 가져와 출력할 예정입니다.</p>`
+    res.send(str)
 })
 
 app.use((req, res) => {
     res.status(404).send('<h1>해당 페이지는 없습니다</h1>');
-});
+})
 
 app.listen(app.get('port'), () => {
     console.log(`http://localhost:${app.get('port')}`)
