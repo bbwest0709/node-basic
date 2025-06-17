@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼 데이터 전송</title>
+</head>
+<body>
+    <h1>다양한 폼데이터 서버에 전송하기</h1>
+    <h2>GET 방식일 때 요청 데이터 : req.query</h2>
+    <form method="get" action="/login"> <!-- 원래는 GET 쓰면 안 됨-->
+        <label for="nick">닉네임:</label>
+        <input type="text" name="nick" id="nick"><br><br>
+        <label for="password">비밀번호:</label>
+        <input type="password" name="password" id="password"><br><br>
+        <button type="submit">로그인</button>
+    </form>
+    <hr color="red">
+    <h2>POST 방식일 때 요청 데이터 : req.body</h2>
+    <form method="post" action="/login">
+        <label for="nick">닉네임:</label>
+        <input type="text" name="nick" id="nick"><br><br>
+        <label for="password">비밀번호:</label>
+        <input type="password" name="password" id="password"><br><br>
+        <button type="submit">로그인</button>
+    </form>
+    <!-- fetch() 이용해서 요청을 '/login/id' => req.params -->
+     
+</body>
+</html>
