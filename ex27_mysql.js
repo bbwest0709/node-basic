@@ -29,7 +29,15 @@ conn.query('select * from members order by id desc', (err, result) => {
         console.error('쿼리 실행 에러: ', err)
         return;
     }
-    console.log(result)
+    // console.log(result)
+
+    // result.forEach(element => {
+    //     console.log(element.id, element.name, element.email, element.role)
+    // })
+
+    for (let i = 0; i < result.length; i++) {
+        console.log(result[i].id, result[i].name, result[i].email, result[i].role)
+    }
 })
 
 conn.end();
