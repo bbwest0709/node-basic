@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat-private</title>
+    <style>
+        .container {
+            width: 70%;
+            margin: 0 auto;
+        }
+        #msg {
+            width: 500px;
+            height: 500px;
+            overflow: auto;
+            margin-top: 1em;
+            border: 1px solid #ccc;
+            color: darkcyan;
+        }
+        #txt {
+            width: 400px;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+    <!-- socket.io 라이브러리 cdn -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket;
+
+        window.onload = () => {
+            socket = io('http://127.0.0.1:5555'); // 소켓 서버 URL을 설정
+
+            socket.on('connect', () => {
+            console.log('채팅 서버와 연결됨...');
+        });
+
+            // DOM 요소들 선택
+            const txt = document.querySelector('#txt');
+            const btn = document.querySelector('#btnSend');
+            const divMsg = document.querySelector('#msg');
+
+            txt.addEventListener('keyup', function(e) {
+                console.log(e.key, e.keyCode)
+                if(e.key === 'Enter'){
+                    let sendMsg = txt.value
+                    send(sendMsg)
+                    txt.value=""
+                    txt.focus()
+                }
+
+            })
+
+            // 버튼 클릭 시 메시지 서버로 전송
+            btn.addEventListener('click', function() {
+                const sendMsg = txt.value;
+
+                send(sendMsg);
+                txt.value="";
+                txt.focus();
+            });
+
+            function send(str) {
+                socket.emit('echo', str);  // 서버로 'echo' 이벤트 전송
+            }
+
+            // 서버가 보내오는 메시지 처리
+            socket.on('sendOne', (data) => {
+            const newMessage = document.createElement('div');
+            newMessage.innerHTML += data + "<br>";  // 받은 메시지 추가
+            newMessage.style.color = 'darkcyan';
+            divMsg.appendChild(newMessage);
+        });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Simple Chat - private</h1>
+        <div class="row m-3">
+            <div class="col-md-8 offset-md-2">
+                <input type="text" id="txt" class="form-control" autofocus placeholder="Message">
+                <button id="btnSend" type="button" class="btn btn-success">Send</button>
+            </div>
+        </div>
+
+        <div class="row m-3">
+            <div class="col-md-8 offset-md-2">
+                <div id="msg">
+                    <!-- 채팅 대화 내용이 여기에 표시됨 -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
